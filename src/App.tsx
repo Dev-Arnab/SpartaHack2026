@@ -649,10 +649,10 @@ export default function App() {
               <span className="text-white/70">image + audio</span>
             </div>
 
-            <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">
-              Deepfake / AI Detector{" "}
-              {/* <span className="text-white/55">(frontend)</span> */}
+            <h1 className="mt-5 text-4xl sm:text-5xl font-jet font-semibold tracking-[0.25em] text-[rgba(255,45,45,0.95)] drop-shadow-[0_0_18px_rgba(255,45,45,0.75)]">
+            DEEPSLEUTH
             </h1>
+
 
             <p className="mt-3 max-w-3xl text-base sm:text-lg text-white/70">
               Upload an <span className="text-white">image</span> or{" "}
