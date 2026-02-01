@@ -651,7 +651,7 @@ export default function App() {
 
             <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">
               Deepfake / AI Detector{" "}
-              <span className="text-white/55">(frontend)</span>
+              {/* <span className="text-white/55">(frontend)</span> */}
             </h1>
 
             <p className="mt-3 max-w-3xl text-base sm:text-lg text-white/70">
