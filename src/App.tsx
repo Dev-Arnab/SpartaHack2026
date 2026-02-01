@@ -661,11 +661,11 @@ export default function App() {
               collaborative demo effects, and a live activity feed.
             </p>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            {/* <div className="mt-4 flex flex-wrap gap-2">
               <Chip label="Ambient Background Motion" tone="red" />
               <Chip label="Collaborative Animations (demo)" />
               <Chip label="Live Activity Feed" />
-            </div>
+            </div> */}
           </div>
 
           <button
