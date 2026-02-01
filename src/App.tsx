@@ -954,8 +954,7 @@ export default function App() {
                 </div>
 
                 <div className="pt-2 text-sm text-white/45">
-                  Once you have a backend + API key, replace the hash score with
-                  real detection output.
+                 
                 </div>
               </div>
             </div>
