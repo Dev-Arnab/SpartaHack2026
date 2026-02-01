@@ -320,92 +320,92 @@ function Particles({
   );
 }
 
-/**
- * Fake “collab cursors” + presence chips (demo)
- */
-function CollaborativePreview() {
-  return (
-    <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="grid h-11 w-11 place-items-center rounded-2xl border border-[rgba(255,45,45,0.25)] bg-[rgba(255,45,45,0.10)]">
-            <Icon name="users" className="h-5 w-5 text-[rgba(255,90,90,0.95)]" />
-          </div>
-          <div>
-            <div className="text-lg font-medium">Real-Time Collaborative Animations</div>
-            <div className="text-sm text-white/60">Presence, cursors, and shared motion (demo)</div>
-          </div>
-        </div>
+// /**
+//  * Fake “collab cursors” + presence chips (demo)
+//  */
+// function CollaborativePreview() {
+//   return (
+//     <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/[0.03] p-5">
+//       <div className="flex flex-wrap items-center justify-between gap-3">
+//         <div className="flex items-center gap-3">
+//           <div className="grid h-11 w-11 place-items-center rounded-2xl border border-[rgba(255,45,45,0.25)] bg-[rgba(255,45,45,0.10)]">
+//             <Icon name="users" className="h-5 w-5 text-[rgba(255,90,90,0.95)]" />
+//           </div>
+//           <div>
+//             <div className="text-lg font-medium">Real-Time Collaborative Animations</div>
+//             <div className="text-sm text-white/60">Presence, cursors, and shared motion (demo)</div>
+//           </div>
+//         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <Chip label="Kajal (you)" tone="red" />
-          <Chip label="Teammate A" />
-          <Chip label="Teammate B" />
-        </div>
-      </div>
+//         <div className="flex flex-wrap gap-2">
+//           <Chip label="Kajal (you)" tone="red" />
+//           <Chip label="Teammate A" />
+//           <Chip label="Teammate B" />
+//         </div>
+//       </div>
 
-      <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        {/* Mini canvas */}
-        <div className="relative min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-black/20">
-          <div className="absolute inset-0 opacity-70">
-            <Particles density={10} />
-          </div>
+//       <div className="mt-5 grid gap-4 lg:grid-cols-2">
+//         {/* Mini canvas */}
+//         <div className="relative min-h-[180px] overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+//           <div className="absolute inset-0 opacity-70">
+//             <Particles density={10} />
+//           </div>
 
-          {/* cursors */}
-          <div className="absolute left-[12%] top-[22%] animate-cursorA">
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
-              <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[rgba(255,45,45,0.9)]" />
-              Kajal editing…
-            </div>
-          </div>
+//           {/* cursors */}
+//           <div className="absolute left-[12%] top-[22%] animate-cursorA">
+//             <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
+//               <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[rgba(255,45,45,0.9)]" />
+//               Kajal editing…
+//             </div>
+//           </div>
 
-          <div className="absolute left-[58%] top-[52%] animate-cursorB">
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
-              <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white/40" />
-              Teammate A
-            </div>
-          </div>
+//           <div className="absolute left-[58%] top-[52%] animate-cursorB">
+//             <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
+//               <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white/40" />
+//               Teammate A
+//             </div>
+//           </div>
 
-          <div className="absolute left-[28%] top-[68%] animate-cursorC">
-            <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
-              <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white/40" />
-              Teammate B
-            </div>
-          </div>
+//           <div className="absolute left-[28%] top-[68%] animate-cursorC">
+//             <div className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 backdrop-blur-2xl">
+//               <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white/40" />
+//               Teammate B
+//             </div>
+//           </div>
 
-          {/* scan sweep */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-[40%] top-0 h-full w-[55%] bg-gradient-to-r from-transparent via-[rgba(255,45,45,0.18)] to-transparent animate-sweep" />
-          </div>
-        </div>
+//           {/* scan sweep */}
+//           <div className="pointer-events-none absolute inset-0">
+//             <div className="absolute -left-[40%] top-0 h-full w-[55%] bg-gradient-to-r from-transparent via-[rgba(255,45,45,0.18)] to-transparent animate-sweep" />
+//           </div>
+//         </div>
 
-        {/* Explanation cards */}
-        <div className="grid gap-3">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="flex items-center gap-2 text-base font-medium text-white/85">
-              <Icon name="pulse" className="h-4 w-4 text-[rgba(255,90,90,0.95)]" />
-              Shared “aura” reacts to confidence
-            </div>
-            <div className="mt-1 text-sm text-white/60">
-              When analysis completes, everyone sees the same pulsing ring + glow intensity.
-              Perfect for live demos and group review.
-            </div>
-          </div>
+//         {/* Explanation cards */}
+//         <div className="grid gap-3">
+//           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+//             <div className="flex items-center gap-2 text-base font-medium text-white/85">
+//               <Icon name="pulse" className="h-4 w-4 text-[rgba(255,90,90,0.95)]" />
+//               Shared “aura” reacts to confidence
+//             </div>
+//             <div className="mt-1 text-sm text-white/60">
+//               When analysis completes, everyone sees the same pulsing ring + glow intensity.
+//               Perfect for live demos and group review.
+//             </div>
+//           </div>
 
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="flex items-center gap-2 text-base font-medium text-white/85">
-              <Icon name="wave" className="h-4 w-4 text-[rgba(255,90,90,0.95)]" />
-              Cursor motion + micro-interactions
-            </div>
-            <div className="mt-1 text-sm text-white/60">
-              Motion layers sell the product. Even in “mock mode,” it feels alive and collaborative.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+//           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+//             <div className="flex items-center gap-2 text-base font-medium text-white/85">
+//               <Icon name="wave" className="h-4 w-4 text-[rgba(255,90,90,0.95)]" />
+//               Cursor motion + micro-interactions
+//             </div>
+//             <div className="mt-1 text-sm text-white/60">
+//               Motion layers sell the product. Even in “mock mode,” it feels alive and collaborative.
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function FeatureCard({
   title,
@@ -1008,10 +1008,10 @@ export default function App() {
           </div>
         </div>
 
-        {/* Section: Collab demo */}
+        {/* Section: Collab demo
         <div className="mt-10">
           <CollaborativePreview />
-        </div>
+        </div> */}
 
         {/* Section: Features */}
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
