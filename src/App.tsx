@@ -655,11 +655,11 @@ export default function App() {
 
 
             <p className="mt-3 max-w-3xl text-base sm:text-lg text-white/70">
-              Upload an <span className="text-white">image</span> or{" "}
-              <span className="text-white">audio</span>. No video, no text.
-              Now with <span className="text-white">Tron / Ares red</span> ambient motion,
-              collaborative demo effects, and a live activity feed.
+            Upload an <span className="text-white">image</span> or{" "}
+            <span className="text-white">audio</span> to evaluate authenticity.
+            Get a clear AI likelihood score with real-time visual feedback.
             </p>
+
 
             {/* <div className="mt-4 flex flex-wrap gap-2">
               <Chip label="Ambient Background Motion" tone="red" />
