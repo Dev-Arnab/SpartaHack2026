@@ -763,7 +763,7 @@ export default function App() {
                     We’ll show a preview and compute an AI likelihood score.
                     <br />
                     <span className="text-white/50">
-                      (Deterministic placeholder until your API key exists.)
+                   
                     </span>
                   </div>
 
@@ -879,8 +879,7 @@ export default function App() {
                     </div>
 
                     <div className="mt-5 text-sm text-white/50">
-                      Deterministic placeholder score. When you have a backend +
-                      API key, swap `analyze()` to call your endpoint.
+                     
                     </div>
                   </div>
                 </div>
