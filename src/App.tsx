@@ -447,7 +447,6 @@ function FeatureCard({
 
         <div className="mt-4 h-[2px] w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
         <div className="mt-4 text-xs text-white/45">
-          Hover glow + glass depth • built for demos
         </div>
       </div>
     </div>
@@ -1017,25 +1016,28 @@ export default function App() {
         {/* Section: Features */}
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           <FeatureCard
-            title="Ambient Background Motion"
-            desc="Floating particles + scan sweep + score-driven aura. Makes the UI feel alive and premium (SVGator vibe, but lightweight)."
+            title="Upload Any Media"
+            desc="Upload an image, video, or audio file for analysis. Your media is processed securely and never permanently stored.
+"
             accent
             icon={<Icon name="pulse" className="h-6 w-6 text-[rgba(255,90,90,0.95)]" />}
           />
           <FeatureCard
-            title="Collaborative Review Mode"
-            desc="Presence chips + shared animations so teams can audit suspicious media together in real time."
+            title="AI-Powered Detection"
+            desc="The media is analyzed using a specialized detection model designed to identify signs of AI-generated or manipulated content.
+
+"
             icon={<Icon name="users" className="h-6 w-6 text-white/80" />}
           />
           <FeatureCard
-            title="API-Ready Pipeline"
-            desc="Deterministic local scoring today. Swap in your detector API later without changing the UI contract."
+            title="Clear Confidence Result"
+            desc="You receive a single confidence score and risk assessment indicating how likely the media is synthetic, helping you decide how to proceed."
             icon={<Icon name="bolt" className="h-6 w-6 text-white/80" />}
           />
         </div>
 
         <div className="mt-10 text-center text-sm text-white/40">
-          Built for hackathons: Tron/Ares aesthetic • ambient motion • collab demo • activity feed.
+          Creating solutions to a safer world 
         </div>
       </div>
     </div>
