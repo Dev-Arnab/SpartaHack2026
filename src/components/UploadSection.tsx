@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { Upload, FileImage, FileVideo, FileAudio, Loader2, AlertCircle } from 'lucide-react';
-import { supabase } from '../lib/supabase';
 
 interface UploadSectionProps {
   onAnalysisStart: (analysisId: string) => void;
@@ -11,6 +10,7 @@ export default function UploadSection({ onAnalysisStart }: UploadSectionProps) {
   const [file, setFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<any | null>(null);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -65,44 +65,38 @@ export default function UploadSection({ onAnalysisStart }: UploadSectionProps) {
 
   const handleAnalyze = async () => {
     if (!file) return;
-
     setIsUploading(true);
     setError(null);
 
     try {
-      const fileUrl = URL.createObjectURL(file);
+      // POST the file to the local detection server. The server should be
+      // running separately (see README / server/index.js). It will call
+      // RealityDefender with the API key from the .env on the server side.
+      const form = new FormData();
+      form.append('file', file, file.name);
 
-      const { data: analysis, error: dbError } = await supabase
-        .from('analyses')
-        .insert({
-          file_name: file.name,
-          file_type: getFileType(file.type),
-          file_url: fileUrl,
-          file_size: file.size,
-          status: 'pending',
-        })
-        .select()
-        .single();
-
-      if (dbError) throw dbError;
-
-      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/analyze-content`;
-      const headers = {
-        'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-      };
-
-      fetch(apiUrl, {
+      const resp = await fetch(import.meta.env.VITE_RD_DETECT_URL || 'http://localhost:4000/detect', {
         method: 'POST',
-        headers,
-        body: JSON.stringify({
-          analysisId: analysis.id,
-          fileUrl: fileUrl,
-          fileType: getFileType(file.type),
-        }),
-      }).catch(err => console.error('Analysis error:', err));
+        body: form,
+      });
 
-      onAnalysisStart(analysis.id);
+      if (!resp.ok) {
+        const body = await resp.text();
+        throw new Error(`Server error: ${resp.status} ${body}`);
+      }
+
+      const result = await resp.json();
+      setResult(result);
+
+      // The server returns an object like the shape you provided. Use the
+      // server's requestId as the local analysis id for tracking in the UI.
+      if (result && result.requestId) {
+        onAnalysisStart(result.requestId);
+      }
+
+      // Show results in console and optionally turn into UI state (not
+      // persisted anywhere since Supabase is removed).
+      console.log('Detection result:', result);
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Upload failed');
@@ -208,6 +202,38 @@ export default function UploadSection({ onAnalysisStart }: UploadSectionProps) {
             </>
           )}
         </button>
+      )}
+
+      {/* Detection result panel */}
+      {result && (
+        <div className="mt-6 rounded-xl border border-slate-700/50 bg-slate-900/40 p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm text-slate-300">Request ID</div>
+              <div className="text-xs text-white/80 break-all">{result.requestId}</div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-slate-300">Overall</div>
+              <div className="text-lg font-semibold text-white">{result.status || 'Unknown'}</div>
+              <div className="text-sm text-slate-400">Score: {(result.score ?? 0).toFixed(2)}</div>
+            </div>
+          </div>
+
+          <div className="mt-3">
+            <div className="text-sm text-slate-300 mb-2">Model breakdown</div>
+            <div className="space-y-2 max-h-64 overflow-auto">
+              {Array.isArray(result.models) && result.models.map((m: any) => (
+                <div key={m.name} className="flex items-center justify-between rounded-md p-2 bg-white/2">
+                  <div>
+                    <div className="text-sm text-white">{m.name}</div>
+                    <div className="text-xs text-slate-400">{m.status}</div>
+                  </div>
+                  <div className="text-sm font-mono text-white">{(m.score ?? 0).toFixed(3)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">

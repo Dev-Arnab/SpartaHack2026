@@ -37,17 +37,6 @@ async function sha256Hex(file: File): Promise<string> {
     .join("");
 }
 
-/**
- * Deterministic placeholder score (NOT random):
- * Same file -> same score. Replace later with real API output.
- */
-function scoreFromHash(hashHex: string) {
-  const head = hashHex.slice(0, 8);
-  const asInt = parseInt(head, 16);
-  const normalized = (asInt % 10_000) / 10_000; // 0..0.9999
-  return 0.05 + normalized * 0.9; // 0.05..0.95
-}
-
 function labelFromScore(s: number): Analysis["label"] {
   if (s >= 0.7) return "Likely AI";
   if (s <= 0.35) return "Likely Real";
@@ -530,14 +519,31 @@ export default function App() {
 
   async function analyze() {
     if (!file || !kind) return;
-
     setStatus("analyzing");
     setErrorMsg(null);
-    pushActivity("analyze", "Running local analysis pipeline…");
+    pushActivity("analyze", "Uploading file to detection server…");
 
     try {
+      const form = new FormData();
+      form.append('file', file, file.name);
+
+      const resp = await fetch(import.meta.env.VITE_RD_DETECT_URL || 'http://localhost:4000/detect', {
+        method: 'POST',
+        body: form,
+      });
+
+      if (!resp.ok) {
+        const body = await resp.text();
+        throw new Error(`Server error: ${resp.status} ${body}`);
+      }
+
+      const rd = await resp.json();
+
+      // compute hash locally for display
       const hashHex = await sha256Hex(file);
-      const s = scoreFromHash(hashHex);
+
+      // map server response to local Analysis shape
+      const s = typeof rd.score === 'number' ? rd.score : 0;
       const label = labelFromScore(s);
 
       const result: Analysis = {
@@ -550,7 +556,7 @@ export default function App() {
 
       setAnalysis(result);
 
-      // Smooth scan animation to the real value (no randomness)
+      // animate to server score
       setAnimatedScore(0);
       const start = performance.now();
       const duration = 900;
@@ -569,8 +575,8 @@ export default function App() {
       requestAnimationFrame(tick);
     } catch (e) {
       setStatus("error");
-      setErrorMsg("Could not analyze this file in the browser.");
-      pushActivity("error", "Analysis failed in browser");
+      setErrorMsg(e instanceof Error ? e.message : String(e));
+      pushActivity("error", "Analysis failed: " + (e instanceof Error ? e.message : String(e)));
     }
   }
 
